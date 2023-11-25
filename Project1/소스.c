@@ -1,41 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Account { //°èÁÂ ±¸Á¶Ã¼
+typedef struct Account { //ê³„ì¢Œ êµ¬ì¡°ì²´
 
-	char name[20]; //ÀÌ¸§
-	int birth; //»ı³â¿ùÀÏ
-	int phone; //ÀüÈ­¹øÈ£
-	int password; //°èÁÂ ºñ¹Ğ¹øÈ£
-	float balance; //ÀÜ¾×
+	char name[20]; //ì´ë¦„
+	int birth; //ìƒë…„ì›”ì¼
+	int phone; //ì „í™”ë²ˆí˜¸
+	int password; //ê³„ì¢Œ ë¹„ë°€ë²ˆí˜¸
+	float balance; //ì”ì•¡
 
 } ACCOUNT;
 
-//¸ŞÀÎ ±â´É ÇÔ¼ö
-void select_menu(); //Ã¹È­¸é(¸Ş´º)
-void create_account(); //°èÁÂ »ı¼º
-void transfer_account(); //°èÁÂ ÀÌÃ¼
-void deposit(); //ÀÔ±İ
-void withdraw(); //Ãâ±İ
+//ë©”ì¸ ê¸°ëŠ¥ í•¨ìˆ˜
+void select_menu(); //ì²«í™”ë©´(ë©”ë‰´)
+void create_account(); //ê³„ì¢Œ ìƒì„±
+void transfer_account(); //ê³„ì¢Œ ì´ì²´
+void deposit(); //ì…ê¸ˆ
+void withdraw(); //ì¶œê¸ˆ
 
-//¸ğµâ ÇÔ¼ö
-void show_account_list(); //°èÁÂ ¸ñ·Ï Ç¥½Ã
-void show_account_detail(); //°èÁÂ Á¶È¸
-void getLineSize(); //txt ÆÄÀÏ¿¡ µî·ÏµÈ °èÁÂ ¼ö = txt ÆÄÀÏÀÇ ÁÙ °³¼ö
-void refreshDB(); //°èÁÂ DB ºÒ·¯¿À±â
-void updateDB(); //°èÁÂ DB ¾÷µ¥ÀÌÆ®
+//ëª¨ë“ˆ í•¨ìˆ˜
+void show_account_list(); //ê³„ì¢Œ ëª©ë¡ í‘œì‹œ
+void show_account_detail(); //ê³„ì¢Œ ì¡°íšŒ
+void getLineSize(); //txt íŒŒì¼ì— ë“±ë¡ëœ ê³„ì¢Œ ìˆ˜ = txt íŒŒì¼ì˜ ì¤„ ê°œìˆ˜
+void refreshDB(); //ê³„ì¢Œ DB ë¶ˆëŸ¬ì˜¤ê¸°
+void updateDB(); //ê³„ì¢Œ DB ì—…ë°ì´íŠ¸
 
 int account_index;
 
-ACCOUNT accounts[100]; //°èÁÂ ÃÖ´ë 100°³
+ACCOUNT accounts[100]; //ê³„ì¢Œ ìµœëŒ€ 100ê°œ
 
 int main() {
 
-	select_menu(); //¸Ş´º ¼±ÅÃ
+	select_menu(); //ë©”ë‰´ ì„ íƒ
 	return 0;
 }
 
-//ÆÄÀÏ ÁÙ °³¼ö = db_size
+//íŒŒì¼ ì¤„ ê°œìˆ˜ = account_index
 void getLineSize() {
 	FILE* fp;
 	fp = fopen("accounts.txt", "r");
@@ -52,10 +52,10 @@ void getLineSize() {
 	fclose(fp);
 }
 
-//°èÁÂ ¸ñ·Ï ºÒ·¯¿À±â
+//ê³„ì¢Œ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
 void refreshDB() {
 	getLineSize();
-	printf("\n\nµî·ÏµÈ °èÁÂ ¼ö: %d°³", account_index);
+	printf("\n\në“±ë¡ëœ ê³„ì¢Œ ìˆ˜: %dê°œ", account_index);
 
 	FILE* f;
 	f = fopen("accounts.txt", "r");
@@ -65,21 +65,21 @@ void refreshDB() {
 	fclose(f);
 }
 
-// ¸Ş´º ¼±ÅÃ
+// ë©”ë‰´ ì„ íƒ
 void select_menu() {
 	refreshDB();
 
 	int selected_number;
 
 	printf("\n\n=======================================\n");
-	printf("\n\n¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä.\n");
-	printf("1. °èÁÂ »ı¼º\n");
-	printf("2. °èÁÂ Á¶È¸\n");
-	printf("3. °èÁÂ ÀÌÃ¼\n");
-	printf("4. ÀÔ±İ\n");
-	printf("5. Ãâ±İ\n");
+	printf("\n\në©”ë‰´ë¥¼ ì„ íƒí•˜ì„¸ìš”.\n");
+	printf("1. ê³„ì¢Œ ìƒì„±\n");
+	printf("2. ê³„ì¢Œ ì¡°íšŒ\n");
+	printf("3. ê³„ì¢Œ ì´ì²´\n");
+	printf("4. ì…ê¸ˆ\n");
+	printf("5. ì¶œê¸ˆ\n");
 
-	printf("\n¿øÇÏ½Ã´Â ¸Ş´ºÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ");
+	printf("\nì›í•˜ì‹œëŠ” ë©”ë‰´ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ");
 	scanf("%d", &selected_number);
 
 	switch (selected_number) {
@@ -104,21 +104,21 @@ void select_menu() {
 	}
 }
 
-//°èÁÂ »ı¼º
+//ê³„ì¢Œ ìƒì„±
 void create_account() {
 	int new_index = account_index + 1;
 
 	printf("\n\n=======================================\n\n");
-	printf("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%s", accounts[new_index].name);
 
-	printf("\n»ı³â¿ùÀÏ 8ÀÚ¸®À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nìƒë…„ì›”ì¼ 8ìë¦¬ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &accounts[new_index].birth);
 
-	printf("\nÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &accounts[new_index].phone);
 
-	printf("\n°èÁÂ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nê³„ì¢Œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &accounts[new_index].password);
 
 	FILE* f = fopen("accounts.txt", "a+");
@@ -129,19 +129,19 @@ void create_account() {
 
 	account_index++;
 
-	printf("\n\n°èÁÂ¸¦ »ı¼ºÇÏ¿´½À´Ï´Ù.");
+	printf("\n\nê³„ì¢Œë¥¼ ìƒì„±í•˜ì˜€ìŠµë‹ˆë‹¤.");
 	_sleep(1000);
 
 	select_menu();
 }
 
-//°èÁÂ ¸ñ·Ï Ç¥½Ã
+//ê³„ì¢Œ ëª©ë¡ í‘œì‹œ
 void show_account_list() {
 	printf("\n\n=======================================\n");
-	printf("\nÃÑ °èÁÂ ¸ñ·Ï");
+	printf("\nì´ ê³„ì¢Œ ëª©ë¡");
 	printf("\n\n---------------------------------------\n");
 
-	printf("| [¹øÈ£] ÀÌ¸§ / »ı³â¿ùÀÏ\n");
+	printf("| [ë²ˆí˜¸] ì´ë¦„ / ìƒë…„ì›”ì¼\n");
 	for (int i = 0; i < account_index; i++) {
 		printf("| [%d] %s / %d\n", i, accounts[i].name, accounts[i].birth);
 	}
@@ -149,7 +149,7 @@ void show_account_list() {
 
 }
 
-//°èÁÂ DB ¾÷µ¥ÀÌÆ®
+//ê³„ì¢Œ DB ì—…ë°ì´íŠ¸
 void updateDB() {
 	FILE* f = fopen("accounts.txt", "w");
 
@@ -160,19 +160,19 @@ void updateDB() {
 	fclose(f);
 }
 
-//°èÁÂ Á¶È¸
+//ê³„ì¢Œ ì¡°íšŒ
 void show_account_detail() {
 
 	int selected_index;
 
 	show_account_list();
 
-	printf("\n\nÁ¶È¸ÇÒ °èÁÂÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ¸Ş´º·Î µ¹¾Æ°¡·Á¸é -1À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\n\nì¡°íšŒí•  ê³„ì¢Œì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ -1ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &selected_index);
 
 	if (selected_index <= -1) return select_menu();
 	if (selected_index > account_index) {
-		printf("\n\nÁ¸ÀçÇÏÁö ¾Ê´Â °èÁÂÀÔ´Ï´Ù.\n\n");
+		printf("\n\nì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê³„ì¢Œì…ë‹ˆë‹¤.\n\n");
 		_sleep(1000);
 		show_account_detail();
 		return;
@@ -180,26 +180,26 @@ void show_account_detail() {
 
 	int input_password;
 
-	printf("\n°èÁÂ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nê³„ì¢Œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &input_password);
 
 	if (input_password != accounts[selected_index].password) {
-		printf("\nºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.\n");
+		printf("\në¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
 		_sleep(1000);
 		show_account_detail();
 	}
 	else {
 
 		printf("\n\n=======================================\n");
-		printf("\n%s´ÔÀÇ °èÁÂ Á¤º¸\n\n", accounts[selected_index].name);
-		printf("| ÀÌ¸§: %s\n", accounts[selected_index].name);
-		printf("| »ı³â¿ùÀÏ: %d\n", accounts[selected_index].birth);
-		printf("| ÀüÈ­¹øÈ£: %d\n\n", accounts[selected_index].phone);
-		printf("| ÀÜ¾×: %.2f¿ø\n", accounts[selected_index].balance);
+		printf("\n%së‹˜ì˜ ê³„ì¢Œ ì •ë³´\n\n", accounts[selected_index].name);
+		printf("| ì´ë¦„: %s\n", accounts[selected_index].name);
+		printf("| ìƒë…„ì›”ì¼: %d\n", accounts[selected_index].birth);
+		printf("| ì „í™”ë²ˆí˜¸: %d\n\n", accounts[selected_index].phone);
+		printf("| ì”ì•¡: %.2fì›\n", accounts[selected_index].balance);
 
 		int next;
 
-		printf("\n´Ù¸¥ °èÁÂ¸¦ Á¶È¸ÇÏ·Á¸é 1, ¸Ş´º·Î µ¹¾Æ°¡·Á¸é 2¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		printf("\në‹¤ë¥¸ ê³„ì¢Œë¥¼ ì¡°íšŒí•˜ë ¤ë©´ 1, ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ 2ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 		scanf("%d", &next);
 
 		switch (next) {
@@ -215,18 +215,18 @@ void show_account_detail() {
 
 }
 
-//°èÁÂ ÀÌÃ¼
+//ê³„ì¢Œ ì´ì²´
 void transfer_account() {
 	int select_index_from;
 
 	show_account_list();
 
-	printf("\nÀÌÃ¼ÇÒ °èÁÂÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ¸Ş´º·Î µ¹¾Æ°¡·Á¸é -1À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nì´ì²´í•  ê³„ì¢Œì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ -1ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &select_index_from);
 
 	if (select_index_from <= -1) return select_menu();
 	if (select_index_from > account_index) {
-		printf("\n\nÁ¸ÀçÇÏÁö ¾Ê´Â °èÁÂÀÔ´Ï´Ù.\n\n");
+		printf("\n\nì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê³„ì¢Œì…ë‹ˆë‹¤.\n\n");
 		_sleep(1000);
 		transfer_account();
 		return;
@@ -234,17 +234,17 @@ void transfer_account() {
 
 	int input_password_from;
 
-	printf("\n°èÁÂ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nê³„ì¢Œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &input_password_from);
 
 	if (input_password_from != accounts[select_index_from].password) {
-		printf("\nºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.\n");
+		printf("\në¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
 		_sleep(1000);
 		transfer_account();
 	}
 	else {
 		if (accounts[select_index_from].balance <= 0) {
-			printf("\n\nÇØ´ç °èÁÂÀÇ ÀÜ¾×ÀÌ ¾ø½À´Ï´Ù. ¸Ş´º·Î µ¹¾Æ°¡¼­ ÀÔ±İÇÏ¼¼¿ä.\n\n");
+			printf("\n\ní•´ë‹¹ ê³„ì¢Œì˜ ì”ì•¡ì´ ì—†ìŠµë‹ˆë‹¤. ë©”ë‰´ë¡œ ëŒì•„ê°€ì„œ ì…ê¸ˆí•˜ì„¸ìš”.\n\n");
 			_sleep(1000);
 			select_menu();
 			return;
@@ -255,11 +255,11 @@ void transfer_account() {
 		show_account_list();
 
 		while (1) {
-			printf("\nÀÌÃ¼µÉ °èÁÂÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+			printf("\nì´ì²´ë  ê³„ì¢Œì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 			scanf("%d", &select_index_to);
 
 			if (select_index_to == select_index_from) {
-				printf("\nÀÌÃ¼µÉ °èÁÂ¿Í ÀÌÃ¼ÇÒ °èÁÂ´Â µ¿ÀÏÇÒ ¼ö ¾ø½À´Ï´Ù.\n");
+				printf("\nì´ì²´ë  ê³„ì¢Œì™€ ì´ì²´í•  ê³„ì¢ŒëŠ” ë™ì¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 				_sleep(1000);
 			}
 			else {
@@ -269,14 +269,14 @@ void transfer_account() {
 
 		float input_cash;
 
-		printf("\n---------------\n%s´ÔÀÇ °èÁÂ ---> %s´ÔÀÇ °èÁÂ\n---------------\nº¸À¯ °èÁÂ ÀÜ¾×: %.2f¿ø", accounts[select_index_from].name, accounts[select_index_to].name, accounts[select_index_from].balance);
+		printf("\n---------------\n%së‹˜ì˜ ê³„ì¢Œ ---> %së‹˜ì˜ ê³„ì¢Œ\n---------------\në³´ìœ  ê³„ì¢Œ ì”ì•¡: %.2fì›", accounts[select_index_from].name, accounts[select_index_to].name, accounts[select_index_from].balance);
 
 		while (1) {
-			printf("\n\nÀÌÃ¼ÇÒ ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+			printf("\n\nì´ì²´í•  ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 			scanf("%f", &input_cash);
 
 			if (input_cash > accounts[select_index_from].balance) {
-				printf("\n\nÀÌÃ¼ ±İ¾×ÀÌ ÀÜ¾×À» ÃÊ°úÇÏ¿´½À´Ï´Ù.\n\n");
+				printf("\n\nì´ì²´ ê¸ˆì•¡ì´ ì”ì•¡ì„ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.\n\n");
 				_sleep(1000);
 			}
 			else {
@@ -286,8 +286,8 @@ void transfer_account() {
 
 		int final;
 
-		printf("\n---------------\n%s´Ô¿¡°Ô %.2f¿øÀ» ÀÌÃ¼ÇÏ½Ã°Ú½À´Ï±î?\nÀÌÃ¼ ÈÄ ÀÜ¾×: %.2f ---> %.2f\n---------------\n", accounts[select_index_to].name, input_cash, accounts[select_index_from].balance, (accounts[select_index_from].balance - input_cash));
-		printf("\nÀÌÃ¼ÇÏ·Á¸é 1, Ãë¼ÒÇÏ·Á¸é 2¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		printf("\n---------------\n%së‹˜ì—ê²Œ %.2fì›ì„ ì´ì²´í•˜ì‹œê² ìŠµë‹ˆê¹Œ?\nì´ì²´ í›„ ì”ì•¡: %.2f ---> %.2f\n---------------\n", accounts[select_index_to].name, input_cash, accounts[select_index_from].balance, (accounts[select_index_from].balance - input_cash));
+		printf("\nì´ì²´í•˜ë ¤ë©´ 1, ì·¨ì†Œí•˜ë ¤ë©´ 2ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 		scanf("%d", &final);
 
 		switch (final) {
@@ -297,13 +297,13 @@ void transfer_account() {
 
 			updateDB();
 
-			printf("\n\n%s´Ô¿¡°Ô °èÁÂÀÌÃ¼¸¦ ¿Ï·áÇÏ¿´½À´Ï´Ù.\n\nÀÌÃ¼ ÈÄ ÀÜ¾×: %.2f¿ø\n", accounts[select_index_to].name, accounts[select_index_from].balance);
+			printf("\n\n%së‹˜ì—ê²Œ ê³„ì¢Œì´ì²´ë¥¼ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤.\n\nì´ì²´ í›„ ì”ì•¡: %.2fì›\n", accounts[select_index_to].name, accounts[select_index_from].balance);
 			_sleep(1500);
 			select_menu();
 			break;
 		case 2:
 		default:
-			printf("\nÀÌÃ¼¸¦ Ãë¼ÒÇÏ¿´½À´Ï´Ù.\n");
+			printf("\nì´ì²´ë¥¼ ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤.\n");
 			_sleep(1500);
 			transfer_account();
 			break;
@@ -313,18 +313,18 @@ void transfer_account() {
 
 }
 
-//ÀÔ±İ
+//ì…ê¸ˆ
 void deposit() {
 	show_account_list();
 
 	int selected_index;
 
-	printf("\nÀÔ±İÇÒ °èÁÂÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ¸Ş´º·Î µ¹¾Æ°¡·Á¸é -1À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nì…ê¸ˆí•  ê³„ì¢Œì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ -1ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &selected_index);
 
 	if (selected_index <= -1) return select_menu();
 	if (selected_index > account_index) {
-		printf("\n\nÁ¸ÀçÇÏÁö ¾Ê´Â °èÁÂÀÔ´Ï´Ù.\n\n");
+		printf("\n\nì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê³„ì¢Œì…ë‹ˆë‹¤.\n\n");
 		_sleep(1000);
 		deposit();
 		return;
@@ -333,11 +333,11 @@ void deposit() {
 	float input_deposit;
 
 	while (1) {
-		printf("\n\n%s´Ô¿¡°Ô ÀÔ±İÇÒ ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä: ", accounts[selected_index].name);
+		printf("\n\n%së‹˜ì—ê²Œ ì…ê¸ˆí•  ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”: ", accounts[selected_index].name);
 		scanf("%f", &input_deposit);
 
 		if (input_deposit <= 0) {
-			printf("\n\nÀÔ±İÇÒ ±İ¾×Àº ¾ç¼ö¸¸ µË´Ï´Ù.\n\n");
+			printf("\n\nì…ê¸ˆí•  ê¸ˆì•¡ì€ ì–‘ìˆ˜ë§Œ ë©ë‹ˆë‹¤.\n\n");
 			_sleep(1000);
 		}
 		else {
@@ -347,8 +347,8 @@ void deposit() {
 
 	int final;
 
-	printf("\n\n---------------\n%s´Ô¿¡°Ô %.2f¿øÀ» ÀÔ±İÇÏ½Ã°Ú½À´Ï±î?\n---------------\n", accounts[selected_index].name, input_deposit);
-	printf("ÀÔ±İÇÏ·Á¸é 1, Ãë¼ÒÇÏ·Á¸é 2¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\n\n---------------\n%së‹˜ì—ê²Œ %.2fì›ì„ ì…ê¸ˆí•˜ì‹œê² ìŠµë‹ˆê¹Œ?\n---------------\n", accounts[selected_index].name, input_deposit);
+	printf("ì…ê¸ˆí•˜ë ¤ë©´ 1, ì·¨ì†Œí•˜ë ¤ë©´ 2ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &final);
 
 	switch (final) {
@@ -357,13 +357,13 @@ void deposit() {
 
 		updateDB();
 
-		printf("\n\n%s´Ô¿¡°Ô %.2f¿øÀ» ÀÔ±İÇÏ¿´½À´Ï´Ù.\n\n", accounts[selected_index].name, input_deposit);
+		printf("\n\n%së‹˜ì—ê²Œ %.2fì›ì„ ì…ê¸ˆí•˜ì˜€ìŠµë‹ˆë‹¤.\n\n", accounts[selected_index].name, input_deposit);
 		_sleep(1500);
 		select_menu();
 		break;
 	case 2:
 	default:
-		printf("\nÀÔ±İÀ» Ãë¼ÒÇÏ¿´½À´Ï´Ù.\n");
+		printf("\nì…ê¸ˆì„ ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤.\n");
 		_sleep(1500);
 		deposit();
 		break;
@@ -372,19 +372,19 @@ void deposit() {
 
 }
 
-//Ãâ±İ
+//ì¶œê¸ˆ
 void withdraw() {
 
 	show_account_list();
 
 	int selected_index;
 
-	printf("\nÃâ±İÇÒ °èÁÂÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ¸Ş´º·Î µ¹¾Æ°¡·Á¸é -1À» ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nì¶œê¸ˆí•  ê³„ì¢Œì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”. ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ -1ì„ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &selected_index);
 
 	if (selected_index <= -1) return select_menu();
 	if (selected_index > account_index) {
-		printf("\n\nÁ¸ÀçÇÏÁö ¾Ê´Â °èÁÂÀÔ´Ï´Ù.\n\n");
+		printf("\n\nì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê³„ì¢Œì…ë‹ˆë‹¤.\n\n");
 		_sleep(1000);
 		withdraw();
 		return;
@@ -392,11 +392,11 @@ void withdraw() {
 
 	int input_password;
 
-	printf("\n°èÁÂ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+	printf("\nê³„ì¢Œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 	scanf("%d", &input_password);
 
 	if (input_password != accounts[selected_index].password) {
-		printf("\nºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.\n");
+		printf("\në¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
 		_sleep(1000);
 		withdraw();
 	}
@@ -405,11 +405,11 @@ void withdraw() {
 		float input_withdraw;
 
 		while (1) {
-			printf("\nÇöÀç °èÁÂ ÀÜ¾×: %.2f\n%s´ÔÀÇ °èÁÂ¿¡¼­ Ãâ±İÇÒ ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä: ", accounts[selected_index].balance, accounts[selected_index].name);
+			printf("\ní˜„ì¬ ê³„ì¢Œ ì”ì•¡: %.2f\n%së‹˜ì˜ ê³„ì¢Œì—ì„œ ì¶œê¸ˆí•  ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”: ", accounts[selected_index].balance, accounts[selected_index].name);
 			scanf("%f", &input_withdraw);
 
 			if (input_withdraw <= 0) {
-				printf("\n\nÃâ±İÇÒ ±İ¾×Àº ¾ç¼ö¸¸ µË´Ï´Ù.\n\n");
+				printf("\n\nì¶œê¸ˆí•  ê¸ˆì•¡ì€ ì–‘ìˆ˜ë§Œ ë©ë‹ˆë‹¤.\n\n");
 				_sleep(1000);
 			}
 			else {
@@ -419,8 +419,8 @@ void withdraw() {
 
 		int final;
 
-		printf("\n\n---------------\n%s´ÔÀÇ °èÁÂ¿¡¼­ %.2f¿øÀ» Ãâ±İÇÏ½Ã°Ú½À´Ï±î?\nÃâ±İ ÈÄ ÀÜ¾×: %.2f\n---------------\n", accounts[selected_index].name, input_withdraw, accounts[selected_index].balance - input_withdraw);
-		printf("Ãâ±İÇÏ·Á¸é 1, Ãë¼ÒÇÏ·Á¸é 2¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		printf("\n\n---------------\n%së‹˜ì˜ ê³„ì¢Œì—ì„œ %.2fì›ì„ ì¶œê¸ˆí•˜ì‹œê² ìŠµë‹ˆê¹Œ?\nì¶œê¸ˆ í›„ ì”ì•¡: %.2f\n---------------\n", accounts[selected_index].name, input_withdraw, accounts[selected_index].balance - input_withdraw);
+		printf("ì¶œê¸ˆí•˜ë ¤ë©´ 1, ì·¨ì†Œí•˜ë ¤ë©´ 2ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 		scanf("%d", &final);
 
 		switch (final) {
@@ -429,13 +429,13 @@ void withdraw() {
 
 			updateDB();
 
-			printf("\n\n%s´ÔÀÇ °èÁÂ¿¡¼­ %.2f¿øÀ» Ãâ±İÇÏ¿´½À´Ï´Ù.\nÀÜ¾×: %.2f\n", accounts[selected_index].name, input_withdraw, accounts[selected_index].balance);
+			printf("\n\n%së‹˜ì˜ ê³„ì¢Œì—ì„œ %.2fì›ì„ ì¶œê¸ˆí•˜ì˜€ìŠµë‹ˆë‹¤.\nì”ì•¡: %.2f\n", accounts[selected_index].name, input_withdraw, accounts[selected_index].balance);
 			_sleep(1500);
 			select_menu();
 			break;
 		case 2:
 		default:
-			printf("\nÃâ±İÀ» Ãë¼ÒÇÏ¿´½À´Ï´Ù.\n");
+			printf("\nì¶œê¸ˆì„ ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤.\n");
 			_sleep(1500);
 			withdraw();
 			break;
